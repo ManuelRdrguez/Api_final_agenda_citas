@@ -1,32 +1,79 @@
 package com.example.api_final.entities;
 
 import java.sql.Date;
+import java.time.LocalDate;
+
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PastOrPresent;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
+
 
 @Table(name = "Citas")
 @Entity
 public class Cita {
-	 @NotNull
-	 @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-	private Date fehca_hora; 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id; 
+	 @PastOrPresent
+	    private LocalDate fechaReserva;
+	    @FutureOrPresent
+	    private LocalDate fechaExpiracion;
+	    
+	    @FutureOrPresent
+	    private LocalDate fechaCancelada;
 	 
-	 @NotNull
+    @NotBlank(message = "El tipo de corte no puede estar vacío")
 	private String tipo_de_corte; 
 	 
-	 @NotNull
+	@NotBlank
 	private String nombre_de_barbero;
+	 
+	@OneToOne
+	@JoinColumn(name = "usuario_id", referencedColumnName = "id")
+	private Usuario usario; 
 
-	public Date getFehca_hora() {
-		return fehca_hora;
+	
+	public LocalDate getFechaReserva() {
+		return fechaReserva;
 	}
 
-	public void setFehca_hora(Date fehca_hora) {
-		this.fehca_hora = fehca_hora;
+	public void setFechaReserva(LocalDate fechaReserva) {
+		this.fechaReserva = fechaReserva;
+	}
+
+	public LocalDate getFechaExpiracion() {
+		return fechaExpiracion;
+	}
+
+	public void setFechaExpiracion(LocalDate fechaExpiracion) {
+		this.fechaExpiracion = fechaExpiracion;
+	}
+
+	public LocalDate getFechaCancelada() {
+		return fechaCancelada;
+	}
+
+	public void setFechaCancelada(LocalDate fechaCancelada) {
+		this.fechaCancelada = fechaCancelada;
+	}
+
+	public Usuario getUsario() {
+		return usario;
+	}
+
+	public void setUsario(Usuario usario) {
+		this.usario = usario;
 	}
 
 	public String getTipo_de_corte() {
@@ -45,7 +92,6 @@ public class Cita {
 		this.nombre_de_barbero = nombre_de_barbero;
 	} 
 	 
-	 //GETTERS AND SETTERS 
 	 
 	 
 }

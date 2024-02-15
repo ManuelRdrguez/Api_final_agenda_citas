@@ -1,13 +1,15 @@
 package com.example.api_final.entities;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import com.example.demo.entidad.Comentario;
-import com.example.demo.entidad.PerfilUsuario;
-import com.example.demo.entidad.enumerado.RolUsuario;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import jakarta.persistence.CascadeType;
+
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -18,87 +20,106 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Size;
+
+import jakarta.transaction.Transactional;
 
 
-	@Table(name = "Usuarios")
-	@Entity
-	public class Usuario {
-	    @Id
+
+@Entity
+public class Usuario implements UserDetails {
+	  private static final long serialVersionUID = 1L;
+	  	@Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Long id;
-	    
-	    @Column(unique = true, name="username")
-	    private String username;
-	    
-	    @Column(name="password")
-	    @Size(min = 8) // Asumiendo que quieres una contraseña de al menos 8 caracteres
+	    private String firstName;
+	    private String lastName;
+	    @Column(unique = true)
+	    private String email;
 	    private String password;
-	    
-	    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	    private Set<Comentario> comentarios = new HashSet<>();
-		
-	    @Valid
-	    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-	    private PerfilUsuario perfilusuario;
-	    
-	    @ElementCollection(targetClass = RolUsuario.class) //Instrucción de Hibernate para que guarde colecciones enumeradas
+
+	    @ElementCollection(fetch = FetchType.EAGER, targetClass = RolUsuario.class)
 	    @Enumerated(EnumType.STRING)
 	    @CollectionTable(name="usuario_rol")
 	    @Column(name ="RolesUsuario")
 	    private Set<RolUsuario> roles = new HashSet<>();
-	    
-	    // Getters y setters
+
+
+	    @Transactional
+	    @Override
+	    public Collection<? extends GrantedAuthority> getAuthorities() {
+	        // Cargar la colección de roles de manera temprana
+	        roles.size(); // Esto carga la colección de roles
+
+	        return roles.stream()
+	                .map(role -> new SimpleGrantedAuthority(role.name()))
+	                .collect(Collectors.toList());
+	    }
+	    @Override
+	    public String getUsername() {
+	        return email;
+	    }
+
+	    @Override
+	    public boolean isAccountNonExpired() {
+	        return true;
+	    }
+
+	    @Override
+	    public boolean isAccountNonLocked() {
+	        return true;
+	    }
+
+	    @Override
+	    public boolean isCredentialsNonExpired() {
+	        return true;
+	    }
+
+	    @Override
+	    public boolean isEnabled() {
+	        return true;
+	    }
+
+	    @Override
+	    public String getPassword() {
+	        return password;
+	    }
+
+	    // Métodos setter añadidos
+	    public void setFirstName(String firstName) {
+	        this.firstName = firstName;
+	    }
+
+	    public void setLastName(String lastName) {
+	        this.lastName = lastName;
+	    }
+
+	    public void setEmail(String email) {
+	        this.email = email;
+	    }
+
+	    public void setPassword(String password) {
+	        this.password = password;
+	    }
+
+	    public Set<RolUsuario> getRoles() {
+	        return roles;
+	    }
+
+	    public void setRoles(Set<RolUsuario> roles) {
+	        this.roles = roles;
+	    }
 		public Long getId() {
 			return id;
 		}
-
-		public void setId(Long id) {
-			this.id = id;
+		public String getFirstName() {
+			return firstName;
 		}
-
-		public String getUsername() {
-			return username;
+		public String getLastName() {
+			return lastName;
 		}
-
-		public void setUsername(String username) {
-			this.username = username;
+		public String getEmail() {
+			return email;
 		}
-
-		public String getPassword() {
-			return password;
-		}
-
-		public void setPassword(String password) {
-			this.password = password;
-		}
-
-		public Set<RolUsuario> getRoles() {
-			return roles;
-		}
-
-		public void setRoles(Set<RolUsuario> roles) {
-			this.roles = roles;
-		}
-
-		public Set<Comentario> getComentarios() {
-			return comentarios;
-		}
-
-		public void setComentarios(Set<Comentario> comentarios) {
-			this.comentarios = comentarios;
-		}
-
-		public PerfilUsuario getPerfilusuario() {
-			return perfilusuario;
-		}
-
-		public void setPerfilusuario(PerfilUsuario perfilusuario) {
-			this.perfilusuario = perfilusuario;
-		}
-
+	    
+	    
 }
