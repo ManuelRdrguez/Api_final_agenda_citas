@@ -25,14 +25,7 @@ public class Cita {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id; 
-	 @PastOrPresent
-	    private LocalDate fechaReserva;
-	    @FutureOrPresent
-	    private LocalDate fechaExpiracion;
-	    
-	    @FutureOrPresent
-	    private LocalDate fechaCancelada;
-	 
+	
     @NotBlank(message = "El tipo de corte no puede estar vacío")
 	private String tipo_de_corte; 
 	 
@@ -44,30 +37,6 @@ public class Cita {
 	private Usuario usario; 
 
 	
-	public LocalDate getFechaReserva() {
-		return fechaReserva;
-	}
-
-	public void setFechaReserva(LocalDate fechaReserva) {
-		this.fechaReserva = fechaReserva;
-	}
-
-	public LocalDate getFechaExpiracion() {
-		return fechaExpiracion;
-	}
-
-	public void setFechaExpiracion(LocalDate fechaExpiracion) {
-		this.fechaExpiracion = fechaExpiracion;
-	}
-
-	public LocalDate getFechaCancelada() {
-		return fechaCancelada;
-	}
-
-	public void setFechaCancelada(LocalDate fechaCancelada) {
-		this.fechaCancelada = fechaCancelada;
-	}
-
 	public Usuario getUsario() {
 		return usario;
 	}

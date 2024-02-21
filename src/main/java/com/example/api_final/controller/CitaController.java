@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.api_final.entities.Cita;
+import com.example.api_final.entities.Reserva;
 import com.example.api_final.entities.Usuario;
 import com.example.api_final.response.error.DetailsResponse;
 import com.example.api_final.response.error.ErrorDetailsResponse;
@@ -40,6 +41,7 @@ public class CitaController {
 
     @Autowired
     private CitaService citaservice;
+    @Autowired
     private ReservaService reservacita;
 
     // Endpoint para obtener un listado de cita, accesible solo por ROLE_USER
@@ -104,11 +106,11 @@ public class CitaController {
               // Asegúrate de que el ID del usuario sea de tipo Long
               Long usuarioId = usuario.getId(); // Suponiendo que getId() devuelve un Long
 
-              Cita cita = reservacita.crearReserva(citaId, usuarioId, name_barber,  fechaReserva, fechaExpiracion);
+              Reserva reserva = reservacita.crearReserva(citaId, usuarioId, name_barber,  fechaReserva, fechaExpiracion);
               DetailsResponse details_reserva = new DetailsResponse(
                       new Date(),
-                      "Reservado:'" + "Fecha: "+ cita.getFechaReserva() + "Nombre de Barbero: "+ cita.getNombre_de_barbero(), 
-                      "Expiración reserva:'" + cita.getFechaExpiracion()+"'"
+                      "Reservado:'" + "Fecha: "+ reserva.getFechaReserva() + "Nombre de Barbero: ", 
+                      "Expiración reserva:'" + reserva.getFechaExpiracion()+"'"
                     
               );
               return ResponseEntity.status(HttpStatus.CREATED).body(details_reserva);

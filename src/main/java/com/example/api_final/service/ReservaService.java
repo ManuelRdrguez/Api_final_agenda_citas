@@ -10,7 +10,7 @@ import com.example.api_final.entities.Reserva;
 
 public interface ReservaService {
 	 // Método para crear una nueva reserva
-    Reserva crearReserva(Long libroId, Long usuarioId, LocalDate fechaReserva, LocalDate fechaExpiracion);
+    Reserva crearReserva(Long libroId, Long usuarioId, String name_barber, LocalDate fechaReserva, LocalDate fechaExpiracion);
 
     // Método para cancelar una reserva
     Reserva cancelarReserva(Long reservaId);
