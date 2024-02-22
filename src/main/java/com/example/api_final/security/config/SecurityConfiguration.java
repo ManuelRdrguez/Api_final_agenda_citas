@@ -43,8 +43,8 @@ public class SecurityConfiguration {
                 request
 
                 .requestMatchers("/api/v1/auth/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/v1/libros/**").hasAnyAuthority(RolUsuario.ROLE_USER.toString(), RolUsuario.ROLE_ADMIN.toString())
-                .requestMatchers(HttpMethod.POST, "/api/v1/libros/*/reservar/**").hasAuthority(RolUsuario.ROLE_USER.toString()) // Permite a ROLE_USER realizar reservas
+                .requestMatchers(HttpMethod.GET, "/api/v1/citas/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/v1/citas/*/reservar/**").hasAuthority(RolUsuario.ROLE_USER.toString()) // Permite a ROLE_USER realizar reservas
 
                 .requestMatchers(HttpMethod.POST, "/api/v1/libros/**").hasAuthority(RolUsuario.ROLE_ADMIN.toString())
  	           .requestMatchers(HttpMethod.PUT, "/api/v1/libros/**").hasAuthority(RolUsuario.ROLE_ADMIN.toString())
