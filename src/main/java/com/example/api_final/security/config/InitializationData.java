@@ -6,7 +6,9 @@ import javax.management.relation.Role;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -38,6 +40,7 @@ public class InitializationData implements CommandLineRunner {
     	try {
     		// Usuario 1 - Rol USER
             Usuario usuario1 = new Usuario();
+
             usuario1.setFirstName("Alice");
             usuario1.setLastName("Johnson");
             usuario1.setEmail("alice.johnson@example.com");
@@ -79,7 +82,7 @@ public class InitializationData implements CommandLineRunner {
             
             
     	}catch(Exception e) {
-    		
+    		System.err.println("NO SE HA PODIDO INSERATAR LOS USUARIS Y CITAS");
     	}
     	/*Faker faker = new Faker(new Locale("es"));
         for (int i = 0; i < 10; i++) { // Generar 10 libros ficticios
@@ -91,4 +94,6 @@ public class InitializationData implements CommandLineRunner {
         }*/
         
     }
+   
+
 }
