@@ -1,4 +1,4 @@
-package com.example.api_final.dto.response.user;
+package com.example.api_final.response.user;
 
 
 public class JwtAuthenticationResponse {

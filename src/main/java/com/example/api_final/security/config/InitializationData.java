@@ -18,15 +18,12 @@ import com.example.api_final.repository.UserRepository;
 import com.example.api_final.response.user.UserResponse;
 import com.github.javafaker.Faker;
 
-@Profile("demo")
 @Component
 public class InitializationData implements CommandLineRunner {
 
     @Autowired
     private UserRepository usuarioRepository;
-    
-    private final boolean borrarLibros = false; // Variable para controlar el borrado de datos
-    
+        
     @Autowired
     private CitaRepository citaRepository;
 
@@ -36,9 +33,7 @@ public class InitializationData implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
     	
-    	if (borrarLibros) {
-            citaRepository.deleteAll(); // Borra todos los libros existentes
-        }
+ 
     	
     	try {
     		// Usuario 1 - Rol USER
@@ -49,7 +44,11 @@ public class InitializationData implements CommandLineRunner {
             usuario1.setPassword(passwordEncoder.encode("password123"));
             usuario1.getRoles().add(RolUsuario.ROLE_USER);
             usuarioRepository.save(usuario1);
-
+            Cita cita1 = new Cita(); 
+            cita1.setNombre_de_barbero("Manuel Ródriguez");
+            cita1.setTipo_de_corte("Corte degradado con recorte de barba");
+            cita1.setUsario(usuario1);
+            citaRepository.save(cita1);
             // Usuario 2 - Rol ADMIN
             Usuario usuario2 = new Usuario();
             usuario2.setFirstName("Bob");
@@ -58,7 +57,11 @@ public class InitializationData implements CommandLineRunner {
             usuario2.setPassword(passwordEncoder.encode("password456"));
             usuario2.getRoles().add(RolUsuario.ROLE_USER);
             usuarioRepository.save(usuario2);
-
+            Cita cita2 = new Cita(); 
+            cita2.setNombre_de_barbero("Manuel Ródriguez");
+            cita2.setTipo_de_corte("Corte degradado con recorte de barba");
+            cita2.setUsario(usuario2);
+            citaRepository.save(cita1);
             // Usuario 3 - Rol USER
             Usuario usuario3 = new Usuario();
             usuario3.setFirstName("Carol");
@@ -67,7 +70,11 @@ public class InitializationData implements CommandLineRunner {
             usuario3.setPassword(passwordEncoder.encode("password789"));
             usuario3.getRoles().add(RolUsuario.ROLE_USER);
             usuarioRepository.save(usuario3);
-            
+            Cita cita3 = new Cita(); 
+            cita3.setNombre_de_barbero("Manuel Ródriguez");
+            cita3.setTipo_de_corte("Corte degradado con recorte de barba");
+            cita3.setUsario(usuario3);
+            citaRepository.save(cita3);
             
             
             

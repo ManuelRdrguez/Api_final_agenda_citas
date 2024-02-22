@@ -20,11 +20,11 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+import jakarta.persistence.Table;
 import jakarta.transaction.Transactional;
 
 
-
+@Table(name = "Usuarios")
 @Entity
 public class Usuario implements UserDetails {
 	  private static final long serialVersionUID = 1L;

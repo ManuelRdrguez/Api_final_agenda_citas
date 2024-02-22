@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.example.api_final.dto.request.SignUpRequest;
 import com.example.api_final.dto.request.SigninRequest;
-import com.example.api_final.dto.response.user.JwtAuthenticationResponse;
 import com.example.api_final.entities.RolUsuario;
 import com.example.api_final.entities.Usuario;
 import com.example.api_final.repository.UserRepository;
+import com.example.api_final.response.user.JwtAuthenticationResponse;
 import com.example.api_final.service.AuthenticationService;
 import com.example.api_final.service.JwtService;
 

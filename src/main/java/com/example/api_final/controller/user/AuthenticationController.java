@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.api_final.dto.request.SignUpRequest;
 import com.example.api_final.dto.request.SigninRequest;
-import com.example.api_final.dto.response.user.JwtAuthenticationResponse;
+import com.example.api_final.response.user.JwtAuthenticationResponse;
 import com.example.api_final.service.AuthenticationService;
 
 import lombok.RequiredArgsConstructor;
