@@ -12,7 +12,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 
 @Entity
@@ -24,11 +26,11 @@ public class Reserva {
 	   @Enumerated(EnumType.STRING)
 	   private EstadoCita estadoReserva;
 
-	   @ManyToOne
+	   @ManyToMany
 	    @JoinColumn(name = "usuario_id")
 	    private Usuario usuario;
 
-	    @ManyToOne
+	    @OneToOne
 	    @JoinColumn(name = "cita_id")
 	    private Cita cita;
 
@@ -37,11 +39,7 @@ public class Reserva {
 	    @FutureOrPresent
 	    private LocalDate fechaExpiracion;
 	    @FutureOrPresent
-	    private LocalDate fechaRecogida;
-	    @FutureOrPresent
 	    private LocalDate fechaCancelada;
-	    @FutureOrPresent
-	    private LocalDate fechaDevolucion;
 		public Long getId() {
 			return id;
 		}
@@ -78,25 +76,14 @@ public class Reserva {
 		public void setFechaExpiracion(LocalDate fechaExpiracion) {
 			this.fechaExpiracion = fechaExpiracion;
 		}
-		public LocalDate getFechaRecogida() {
-			return fechaRecogida;
-		}
-		public void setFechaRecogida(LocalDate fechaRecogida) {
-			this.fechaRecogida = fechaRecogida;
-		}
+	
 		public LocalDate getFechaCancelada() {
 			return fechaCancelada;
 		}
 		public void setFechaCancelada(LocalDate fechaCancelada) {
 			this.fechaCancelada = fechaCancelada;
 		}
-		public LocalDate getFechaDevolucion() {
-			return fechaDevolucion;
-		}
-		public void setFechaDevolucion(LocalDate fechaDevolucion) {
-			this.fechaDevolucion = fechaDevolucion;
-		}
-	    
+	
 	    
 	
 	    

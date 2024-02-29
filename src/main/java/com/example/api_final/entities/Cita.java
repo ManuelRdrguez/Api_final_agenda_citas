@@ -36,7 +36,21 @@ public class Cita {
 	@JoinColumn(name = "usuario_id", referencedColumnName = "id")
 	private Usuario usario; 
 
+	 private LocalDate fechaReserva;
+	    @FutureOrPresent
+	    private LocalDate fechaExpiracion;
 	
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	
+
 	public Usuario getUsario() {
 		return usario;
 	}

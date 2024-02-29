@@ -1,20 +1,23 @@
 package com.example.api_final.service.imple;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.api_final.entities.Cita;
 import com.example.api_final.entities.Usuario;
+import com.example.api_final.repository.CitaRepository;
 import com.example.api_final.service.CitaService;
 
 @Service
 public class CitaServiceImpl implements CitaService {
+	@Autowired
+	private CitaRepository citaRepository;
 
 	@Override
 	public Page<Cita> ListarTodasLasCitas(Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
+		return citaRepository.findAll(pageable);
 	}
 
 	@Override
