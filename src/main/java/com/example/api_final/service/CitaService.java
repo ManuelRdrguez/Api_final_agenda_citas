@@ -6,19 +6,15 @@ import org.springframework.data.domain.Pageable;
 
 import com.example.api_final.entities.Cita;
 import com.example.api_final.entities.Usuario;
+import com.example.api_final.error.exception.CitaNotFoundException;
 
 public interface CitaService {
 	
 	    Page<Cita> ListarTodasLasCitas(Pageable pageable);
-
-	    Cita ObtenerCitaporId(Long id);
-
-	    Cita ActualizarCita(Long id, Cita cita);
+	    Cita ActualizarCita(Long id, Cita cita) throws CitaNotFoundException;
 	    void EliminarCita(Long id);
-
-	    Cita ReservarCita(Cita cita, Usuario usuario);
-
 		Cita AgregarCita(Cita cita);
+
 
 	   
 	}

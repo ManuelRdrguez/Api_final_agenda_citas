@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-import com.example.api_final.response.user.UserResponse;
+import com.example.api_final.entities.Usuario;
 import com.example.api_final.service.UserService;
 
 
@@ -28,9 +27,9 @@ public class AuthorizationAdminController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<List<UserResponse>> showUsers() {
+    public ResponseEntity<List<Usuario>> showUsers() {
     	logger.info("## AuthorizationAdminController :: showUsers" );
-        List<UserResponse> userList = userService.getAllUsers();
+        List<Usuario> userList = userService.getAllUsers();
         return ResponseEntity.ok(userList);
     }
 }

@@ -15,13 +15,10 @@ import org.springframework.stereotype.Component;
 
 import com.example.api_final.entities.Cita;
 import com.example.api_final.entities.EstadoCita;
-import com.example.api_final.entities.Reserva;
 import com.example.api_final.entities.RolUsuario;
 import com.example.api_final.entities.Usuario;
 import com.example.api_final.repository.CitaRepository;
-import com.example.api_final.repository.ReservaRepository;
 import com.example.api_final.repository.UserRepository;
-import com.example.api_final.response.user.UserResponse;
 import com.github.javafaker.Faker;
 
 @Component
@@ -34,8 +31,6 @@ public class InitializationData implements CommandLineRunner {
     @Autowired
     private CitaRepository citaRepository;
     
-    private ReservaRepository reservarepository;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -50,7 +45,6 @@ public class InitializationData implements CommandLineRunner {
     	try {
     		// Usuario 1 - Rol USER
             Usuario usuario1 = new Usuario();
-            Reserva reserva1 = new Reserva();
             usuario1.setFirstName("Alice");
             usuario1.setLastName("Johnson");
             usuario1.setEmail("alice.johnson@example.com");
@@ -98,7 +92,7 @@ public class InitializationData implements CommandLineRunner {
             usuario4.setFirstName("Manuel");
             usuario4.setLastName("Rodriguez");
             usuario4.setEmail("manuel.rodriguez@example.com");
-            usuario3.setPassword(passwordEncoder.encode("password789"));
+            usuario4.setPassword(passwordEncoder.encode("password789"));
             usuario4.getRoles().add(RolUsuario.ROLE_USER);
             usuarioRepository.save(usuario4);
             Cita cita4 = new Cita(); 

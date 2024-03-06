@@ -4,10 +4,16 @@ import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import com.example.api_final.response.user.UserResponse;
+import com.example.api_final.entities.Cita;
+import com.example.api_final.entities.Usuario;
+import com.example.api_final.error.exception.CitaNotFoundException;
+import com.example.api_final.error.exception.UserNotFoundException;
 
 
 public interface UserService {
     UserDetailsService userDetailsService();
-    List<UserResponse> getAllUsers();
+    List<Usuario> getAllUsers();
+    void EliminarUsuario(Long id);
+	Usuario AgregarUsuario(Usuario user);
+	Usuario ActualizarUsuario(Long id, Usuario actualizado) throws UserNotFoundException;
 }

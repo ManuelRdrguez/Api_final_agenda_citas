@@ -26,6 +26,9 @@ public class Cita {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id; 
 	
+	@FutureOrPresent
+	private LocalDate fecha_hora; 
+	
     @NotBlank(message = "El tipo de corte no puede estar vacío")
 	private String tipo_de_corte; 
 	 
@@ -34,11 +37,10 @@ public class Cita {
 	 
 	@OneToOne
 	@JoinColumn(name = "usuario_id", referencedColumnName = "id")
-	private Usuario usario; 
-
-	 private LocalDate fechaReserva;
-	    @FutureOrPresent
-	    private LocalDate fechaExpiracion;
+	private Usuario usuario; 
+	
+  
+    
 	
 	
 	public Long getId() {
@@ -52,11 +54,11 @@ public class Cita {
 	
 
 	public Usuario getUsario() {
-		return usario;
+		return usuario;
 	}
 
-	public void setUsario(Usuario usario) {
-		this.usario = usario;
+	public void setUsario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public String getTipo_de_corte() {

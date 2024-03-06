@@ -24,12 +24,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.api_final.entities.Cita;
-import com.example.api_final.entities.Reserva;
 import com.example.api_final.entities.Usuario;
+import com.example.api_final.error.exception.CitaNotFoundException;
 import com.example.api_final.response.error.DetailsResponse;
 import com.example.api_final.response.error.ErrorDetailsResponse;
 import com.example.api_final.service.CitaService;
-import com.example.api_final.service.ReservaService;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -41,10 +40,13 @@ public class CitaController {
 
     @Autowired
     private CitaService citaservice;
-    @Autowired
-    private ReservaService reservacita;
 
-    // Endpoint para obtener un listado de cita, accesible solo por ROLE_USER
+    public CitaController(CitaService citaService2) {
+    	this.citaservice = citaService2;
+    }
+
+
+	// Endpoint para obtener un listado de cita, accesible solo por ROLE_USER
     @GetMapping
     @PreAuthorize("hasRole('ROLE_USER') || hasRole('ROLE_ADMIN')")
     public ResponseEntity<Page<Cita>> ListarTodasLasCitas(
@@ -63,7 +65,7 @@ public class CitaController {
     
  // CRUD endpoints, accesibles solo por ROLE_ADMIN
     // Crear una cita
-    @PostMapping
+    @PostMapping("/crear")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Cita CrearCita(@RequestBody Cita cita) {
         return citaservice.AgregarCita(cita);
@@ -72,7 +74,7 @@ public class CitaController {
     // Actualizar una cita
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Cita ActualizarCita(@PathVariable Long id, @RequestBody Cita cita) {
+    public Cita ActualizarCita(@PathVariable Long id, @RequestBody Cita cita) throws CitaNotFoundException {
         return citaservice.ActualizarCita(id, cita);
     }
 
@@ -83,53 +85,6 @@ public class CitaController {
     	citaservice.EliminarCita(id);
     }
     
-    @PostMapping("/{citaId}/reservar")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<?> realizarReserva(@PathVariable Long citaId, @PathVariable String nombre_barbero,  @AuthenticationPrincipal Usuario usuario) {
-    	  try {
-              // Agregar log de la operación
-              logger.info("CitaController :: realizarReserva id Cita: {} Usuario: {}", citaId, usuario.getUsername());
-
-              if (!reservacita.esLibroDisponibleParaReserva(citaId)) {
-                  ErrorDetailsResponse errorDetails = new ErrorDetailsResponse(
-                          new Date(),
-                          "Conflicto",
-                          "La cita no está disponible para reserva."
-                  );
-                  return ResponseEntity.status(HttpStatus.CONFLICT).body(errorDetails);
-              }
-
-              LocalDate fechaReserva = LocalDate.now();
-              LocalDate fechaExpiracion = fechaReserva.plusDays(7);
-              String name_barber = nombre_barbero;
-
-              // Asegúrate de que el ID del usuario sea de tipo Long
-              Long usuarioId = usuario.getId(); // Suponiendo que getId() devuelve un Long
-
-              Reserva reserva = reservacita.crearReserva(citaId, usuarioId, name_barber,  fechaReserva, fechaExpiracion);
-              DetailsResponse details_reserva = new DetailsResponse(
-                      new Date(),
-                      "Reservado:'" + "Fecha: "+ reserva.getFechaReserva() + "Nombre de Barbero: ", 
-                      "Expiración reserva:'" + reserva.getFechaExpiracion()+"'"
-                    
-              );
-              return ResponseEntity.status(HttpStatus.CREATED).body(details_reserva);
-          } catch (EntityNotFoundException e) {
-              ErrorDetailsResponse errorDetails = new ErrorDetailsResponse(
-                      new Date(),
-                      "No encontrado",
-                      e.getMessage()
-              );
-              return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorDetails);
-          } catch (Exception e) {
-              ErrorDetailsResponse errorDetails = new ErrorDetailsResponse(
-                      new Date(),
-                      "Error interno del servidor",
-                      e.getMessage()
-              );
-              return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorDetails);
-          }
-      }
-    
+  
 
 }

@@ -44,7 +44,16 @@ public class Usuario implements UserDetails {
 	    private Set<RolUsuario> roles = new HashSet<>();
 
 
-	    @Transactional
+	    public Usuario() {}
+	    public Usuario(Long id2, String firstName2, String lastName2, String email2, String contraseña, Set<RolUsuario> roles) {
+			this.id = id2;
+			this.firstName= firstName2;
+			this.lastName= lastName2; 
+			this.email= email2; 
+			this.password = contraseña; 
+			this.roles=roles;
+		}
+		@Transactional
 	    @Override
 	    public Collection<? extends GrantedAuthority> getAuthorities() {
 	        // Cargar la colección de roles de manera temprana
