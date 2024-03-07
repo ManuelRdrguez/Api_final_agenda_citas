@@ -46,7 +46,7 @@ public class UsuarioController {
     }
 
     // Crear un nuevo usuario (accesible solo por usuarios con ROLE_ADMIN)
-    @PostMapping("/crear")
+    @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Usuario crearUsuario(@Valid @RequestBody Usuario usuario) {
         return userService.AgregarUsuario(usuario);

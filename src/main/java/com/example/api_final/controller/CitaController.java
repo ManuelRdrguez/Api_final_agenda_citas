@@ -65,7 +65,7 @@ public class CitaController {
     
  // CRUD endpoints, accesibles solo por ROLE_ADMIN
     // Crear una cita
-    @PostMapping("/crear")
+    @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Cita CrearCita(@RequestBody Cita cita) {
         return citaservice.AgregarCita(cita);

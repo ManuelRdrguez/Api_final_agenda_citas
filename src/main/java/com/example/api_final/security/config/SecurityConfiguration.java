@@ -44,13 +44,13 @@ public class SecurityConfiguration {
 
                 .requestMatchers("/api/v1/auth/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/v1/citas/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/v1/citas/*/reservar/**").hasAuthority(RolUsuario.ROLE_USER.toString()) // Permite a ROLE_USER realizar reservas
+                .requestMatchers(HttpMethod.POST, "/api/v1/citas/**").hasAuthority(RolUsuario.ROLE_USER.toString()) // Permite a ROLE_USER realizar citas
 
-                .requestMatchers(HttpMethod.POST, "/api/v1/libros/**").hasAuthority(RolUsuario.ROLE_ADMIN.toString())
- 	           .requestMatchers(HttpMethod.PUT, "/api/v1/libros/**").hasAuthority(RolUsuario.ROLE_ADMIN.toString())
+                .requestMatchers(HttpMethod.POST, "/api/v1/citas/**").hasAuthority(RolUsuario.ROLE_ADMIN.toString())
+ 	           .requestMatchers(HttpMethod.PUT, "/api/v1/citas/**").hasAuthority(RolUsuario.ROLE_ADMIN.toString())
  	          
- 	           .requestMatchers(HttpMethod.DELETE, "/api/v1/libros/**").hasAuthority(RolUsuario.ROLE_ADMIN.toString())
- 	           	.requestMatchers("/api/v1/users/**").hasAuthority("ROLE_ADMIN")  // Modificado aquí
+ 	           .requestMatchers(HttpMethod.DELETE, "/api/v1/citas/**").hasAuthority(RolUsuario.ROLE_ADMIN.toString())
+ 	           	.requestMatchers("/api/v1/usuarios/**").hasAuthority("ROLE_ADMIN")  // Modificado aquí
                 .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .cors(Customizer.withDefaults()) // Configure CORS here with Customizer
